@@ -1,23 +1,22 @@
 # WP Debug Viewer
 
-Visual Studio Code extension to show WordPress `debug.log` file in a dedicated panel ("Sidebar," in VSC vocabulary) panel. Keep your Terminal panel available without having to swap views to view debugging output.
+Visual Studio Code extension to show WordPress `debug.log` file in a dedicated panel ("Sidebar," in VSC vocabulary). Keep the terminal where you're actually typing visible and view debugging info differently.
 
 ## Features
 
 - **Sidebar Integration**: Lives in the Sidebar (Activity Bar), separate from your terminal and editor panels.
 - **Real-time Updates**: Automatically watches the log file and streams new entries as they happen.
 - **Remote Support**: Works seamlessly with VS Code Remote (SSH, WSL, Dev Containers) by using the Workspace file system API.
-- **Configurable Path**: Defaults to `wp-content/debug.log` but can be pointed to any file path relative to your workspace root.
-- **Performance**: Optimized to only render the last 200 lines to prevent lag with massive log files.
+- **Configurable**: Default path is `wp-content/debug.log` but can be pointed to any file path relative to your workspace root.
 
 ## Requirements
 
-This extension requires a standard WordPress installation with debugging enabled. You must have the following constants set in your `wp-config.php` file for the log to be generated:
+Set the following constants in `wp-config.php`:
 
 ```php
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
-define( 'WP_DEBUG_DISPLAY', false ); // Optional: keeps errors off the screen and in the log only
+define( 'WP_DEBUG_DISPLAY', false ); // Optional
 ```
 
 ## Installation
@@ -38,15 +37,14 @@ define( 'WP_DEBUG_DISPLAY', false ); // Optional: keeps errors off the screen an
 2.  Click the **WP Debug Viewer** icon in the Activity Bar (the strip on the left or right side of the window).
     *   *Note: If you don't see the icon, look for it in the "..." overflow menu or try reloading VS Code.*
 3.  The sidebar will open and display the contents of your `debug.log`.
-4.  If the file doesn't exist yet, the extension will wait for it to be created (it monitors for file creation).
 
 ### Moving the Panel
-By default, VS Code places new sidebar items on the left. If you want the log viewer on the right (like the image in your requirements):
+By default, VS Code places new sidebar items on the left. If you want the log viewer on the right:
 1.  Drag the **WP Debug Viewer** icon from the left Activity Bar.
 2.  Drop it onto the right Activity Bar (where Copilot Chat or Outline might be).
 3.  VS Code will remember this position.
 
-## Extension Settings
+## Extension Configuration
 
 This extension contributes the following settings:
 
@@ -54,12 +52,8 @@ This extension contributes the following settings:
     *   The relative path to the debug log file from the workspace root.
     *   Default: `wp-content/debug.log`
 
-### Changing the Log Path
+### Change Path
 1.  Go to **File > Preferences > Settings** (or `Ctrl+,`).
 2.  Search for "WP Debug Viewer".
 3.  Update the path if your log file is located elsewhere (e.g., `wp-content/logs/debug.log`).
 
-----
-
-### License
-MIT
