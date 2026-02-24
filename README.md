@@ -22,6 +22,9 @@ define( 'WP_DEBUG_DISPLAY', false ); // Optional: keeps errors off the screen an
 
 ## Installation
 
+> [!CAUTION]
+> I haven't got this on VSC Marketplace yet. Install manually for now.
+
 1.  Download the `.vsix` file provided (or package it yourself using `vsce package`).
 2.  Open Visual Studio Code.
 3.  Go to the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).

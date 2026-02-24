@@ -1,0 +1,53 @@
+{
+  "name": "wp-debug-viewer",
+  "displayName": "WP Debug Viewer",
+  "description": "Visual Studio Code extension to display a terminal that `tail`s your `debug.log` file.",
+  "version": "1.0.0",
+  "publisher": "ara303",
+  "repository": "ara303/wp-debug-viewer",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:wpDebugViewer.open"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "wp-debug-container",
+          "title": "WP Debug Viewer",
+          "icon": "resources/log-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "wp-debug-container": [
+        {
+          "icon": "resources/icon.svg",
+          "type": "webview",
+          "id": "wpDebugViewer.logView",
+          "name": "Log Output"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "WP Debug Viewer",
+      "properties": {
+        "wpDebugViewer.path": {
+          "type": "string",
+          "default": "wp-content/debug.log",
+          "description": "Relative path to the debug.log file."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0"
+  }
+}
+
