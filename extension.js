@@ -13,19 +13,15 @@ class WpDebugViewProvider {
 
         webviewView.webview.options = {
             enableScripts: true,
-            // Allow the webview to load resources from the extension directory
             localResourceRoots: [this._extensionUri]
         };
 
-        // Set the HTML content
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
-        // Setup the file monitoring
         this._startWatcher();
 
-        // Re-setup watcher if settings change
         vscode.workspace.onDidChangeConfiguration(e => {
-            if (e.affectsConfiguration('wpDebugViewer.path')) {
+            if (e.affectsConfiguration('wpDebugViewer')) {
                 this._startWatcher();
             }
         });
@@ -48,10 +44,8 @@ class WpDebugViewProvider {
         const workspaceRoot = workspaceFolders[0].uri.fsPath;
         const fullPath = path.join(workspaceRoot, relativePath);
 
-        // Initial Read
         this._readAndDisplay(fullPath);
 
-        // Create FileSystemWatcher (Works remotely)
         this._watcher = vscode.workspace.createFileSystemWatcher(
             new vscode.RelativePattern(workspaceFolders[0], relativePath)
         );
@@ -66,55 +60,50 @@ class WpDebugViewProvider {
         try {
             const uri = vscode.Uri.file(fullPath);
             const content = await vscode.workspace.fs.readFile(uri);
-            
-            // Convert to string
             const text = Buffer.from(content).toString('utf8');
-            
+
             if (text.trim().length === 0) {
                 this._updateContent('Log file is empty.');
                 return;
             }
 
-            // Get last 200 lines (performance optimization)
             const lines = text.split('\n');
             const tail = lines.slice(-200).join('\n');
 
             this._updateContent(tail);
         } catch (err) {
-            // Specifically handle file not found
             if (err.code === 'FileNotFound' || err.name === 'EntryNotFound (FileSystemError)') {
-                 this._updateContent(`File not found at:\n${fullPath}\n\nCheck your setting 'wpDebugViewer.path'.`);
+                this._updateContent(`File not found at:\n${fullPath}\n\nCheck your setting 'wpDebugViewer.path'.`);
             } else {
-                 this._updateContent(`Error reading log:\n${err.message}`);
+                this._updateContent(`Error reading log:\n${err.message}`);
             }
         }
     }
 
     _updateContent(text) {
         if (this._view) {
-            this._view.webview.postMessage({ command: 'update', text: text });
+            const config = vscode.workspace.getConfiguration('wpDebugViewer');
+            const fontSize = config.get('fontSize') || 12;
+            this._view.webview.postMessage({ command: 'update', text, fontSize });
         }
     }
 
     _getHtmlForWebview(webview) {
-        // Essential for allowing scripts to run
         const cspSource = webview.cspSource;
 
         return `<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <!-- Security Policy: Allow scripts and styles -->
             <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${cspSource} 'unsafe-inline'; script-src ${cspSource} 'unsafe-inline';">
             <style>
-                body { 
-                    margin: 0; 
-                    padding: 0; 
-                    background-color: var(--vscode-sideBar-background); 
-                    color: var(--vscode-editor.foreground); 
-                    font-family: var(--vscode-editor-font-family); 
-                    font-size: var(--vscode-editor-font-size); 
-                    overflow: hidden; 
+                body {
+                    margin: 0;
+                    padding: 0;
+                    background-color: var(--vscode-sideBar-background);
+                    color: var(--vscode-editor-foreground);
+                    font-family: var(--vscode-editor-font-family);
+                    overflow: hidden;
                 }
                 #log {
                     width: 100%;
@@ -128,14 +117,14 @@ class WpDebugViewProvider {
             </style>
         </head>
         <body>
-            <div id="log">Initializing...</div>
+            <div id="log">Loading...</div>
             <script>
                 const logDiv = document.getElementById('log');
                 window.addEventListener('message', event => {
                     const message = event.data;
                     if (message.command === 'update') {
+                        logDiv.style.fontSize = message.fontSize + 'px';
                         logDiv.innerText = message.text;
-                        // Auto-scroll to bottom
                         logDiv.scrollTop = logDiv.scrollHeight;
                     }
                 });

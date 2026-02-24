@@ -48,12 +48,20 @@ By default, VS Code places new sidebar items on the left. If you want the log vi
 
 This extension contributes the following settings:
 
-*   `wpDebugViewer.path`: 
-    *   The relative path to the debug log file from the workspace root.
-    *   Default: `wp-content/debug.log`
+*   `wpDebugViewer.path`: The relative path to the debug log file from the workspace root. Default: `wp-content/debug.log`
+*   `wpDebugViewer.fontSize`: Font size in pixels for the log output panel. Default: `12`
 
-### Change Path
+### Change the log file path
 1.  Go to **File > Preferences > Settings** (or `Ctrl+,`).
-2.  Search for "WP Debug Viewer".
-3.  Update the path if your log file is located elsewhere (e.g., `wp-content/logs/debug.log`).
+2.  Search for **WP Debug Viewer**.
+3.  Update **Path** to the location of your log file relative to the workspace root (e.g., `wp-content/logs/debug.log`).
+
+The panel reloads automatically when the setting is saved.
+
+### Change the font size
+1.  Go to **File > Preferences > Settings** (or `Ctrl+,`).
+2.  Search for **WP Debug Viewer**.
+3.  Update **Font Size** to the desired pixel value (e.g., `14`).
+
+The panel updates immediately when the setting is saved.
 

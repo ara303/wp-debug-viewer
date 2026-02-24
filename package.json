@@ -12,7 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:wpDebugViewer.open"
+    "onView:wpDebugViewer.logView"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -42,6 +42,11 @@
           "type": "string",
           "default": "wp-content/debug.log",
           "description": "Relative path to the debug.log file."
+        },
+        "wpDebugViewer.fontSize": {
+          "type": "number",
+          "default": 12,
+          "description": "Font size (in px) for the log output panel."
         }
       }
     }
