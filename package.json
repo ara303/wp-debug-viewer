@@ -1,10 +1,13 @@
 {
   "name": "wp-debug-viewer",
+  "version": "1.0.1",
   "displayName": "WP Debug Viewer",
   "description": "Visual Studio Code extension to display a terminal that `tail`s your `debug.log` file.",
-  "version": "1.0.1",
   "publisher": "ara303",
-  "repository": "ara303/wp-debug-viewer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ara303/wp-debug-viewer"
+  },
   "engines": {
     "vscode": "^1.60.0"
   },
