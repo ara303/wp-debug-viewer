@@ -2,6 +2,8 @@
 
 Visual Studio Code extension to show WordPress `debug.log` file in a dedicated panel ("Sidebar" in VSC vocabulary). Keep the terminal where you're actually typing visible and view debugging info differently.
 
+**[Install now](https://marketplace.visualstudio.com/items?itemName=ara303.wp-debug-viewer)**
+
 ## Features
 
 - **Sidebar integration**: Debug display separate from your terminal and/or editor panels.
@@ -21,10 +23,9 @@ define( 'WP_DEBUG_DISPLAY', false ); // Optional
 
 ## Installation
 
-> [!CAUTION]
-> Not available via VSC Marketplace - _yet_.
->
-> Manual installation:
+Download from the **[Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ara303.wp-debug-viewer)**.
+
+Or manually:
 
 1.  Download the `.vsix` file provided (or clone repo and package with `vsce package`).
 2.  Open to Visual Studio Code's Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
