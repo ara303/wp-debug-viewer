@@ -11,9 +11,19 @@ Visual Studio Code extension to show WordPress `debug.log` file in a dedicated p
 - **Remote support**: Works seamlessly with VS Code Remote (WSL or  Dev Containers) by using the Workspace file system API.
 - **Configurable**: Default path is `wp-content/debug.log` but can be pointed to any file path relative to your workspace root.
 
-## Requirements
+## Installation
 
-Set the following constants in `wp-config.php`:
+Install on **[Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ara303.wp-debug-viewer)**.
+
+Or download [latest release](https://github.com/ara303/wp-debug-viewer/releases/latest) (VSCodium, Cursor, Windsurf, etc.).
+
+Manual instructions:
+
+1.  Download the latest release, or clone this repo (requires [`vsce`](https://github.com/microsoft/vscode-vsce)).
+2.  Open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+3.  Click the "..." (Views and More Actions) menu in the top-right corner of the Extensions sidebar.
+4.  Select **Install from VSIX...** and choose the downloaded file.
+5.  In your WordPress project, set the following constants in `wp-config.php`:
 
 ```php
 define( 'WP_DEBUG', true );
@@ -21,22 +31,18 @@ define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false ); // Optional
 ```
 
-## Installation
+If your `debug.log` is doesn't exist or is empty, **temporarily** add something like this to `functions.php` to create it:
 
-Download from the **[Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ara303.wp-debug-viewer)**.
-
-Or manually:
-
-1.  Download the `.vsix` file provided (or clone repo and package with `vsce package`).
-2.  Open to Visual Studio Code's Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
-3.  Click the "..." (Views and More Actions) menu in the top-right corner of the Extensions sidebar.
-4.  Select **Install from VSIX...** and choose the downloaded file.
+```php
+add_action( 'wp', function(){
+    error_log( 'debug viewer test' );
+});
+```
 
 ## Usage
 
-1.  Open a WordPress project folder in VS Code.
-2.  Click the **WP Debug Viewer** icon in the Activity Bar (the strip on the left or right side of the window).
-3.  The sidebar will open and display the contents of your `debug.log`.
+1.  When working in a WordPress project, click the **WP Debug Viewer** icon in the Activity Bar (the strip on the left or right side of the window).
+2.  The sidebar will open and display the contents of your `debug.log`.
 
 ### Panel position
 If you want the log viewer on the right (so you can have your normal terminal below your work area):
@@ -49,12 +55,12 @@ If you want the log viewer on the right (so you can have your normal terminal be
 *   `wpDebugViewer.fontSize`: Font size in pixels for the log output panel. Default: `12`
 
 ### Custom `debug.log` file path
-1.  Search for **WP Debug Viewer** in your Settings page (File > Preferences > Settings, or `Ctrl` + `,`).
+1.  Search for **WP Debug Viewer** in your Settings page (File > Preferences > Settings, or `Ctrl+,`/`Cmd+,`).
 2.  Update **Path** relative to the workspace root (e.g., `your/path/to/debug.log`).
 3.  Alternatively, add `"wpDebugViewer.path": "your/path/to/debug.log"` to `settings.json` directly.
 
 ### Custom font size
-1.  Search for **WP Debug Viewer** in your Settings page (File > Preferences > Settings, or `Ctrl` + `,`).
+1.  Search for **WP Debug Viewer** in your Settings page (File > Preferences > Settings, or `Ctrl+,`/`Cmd+,`).
 2.  Update **Font Size** to the desired pixel value (e.g., `14`).
 3.  Alternatively, add `"wpDebugViewer.fontSize": 14` to `settings.json` directly.
 
